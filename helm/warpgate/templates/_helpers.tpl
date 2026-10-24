@@ -313,10 +313,16 @@ http:
   listen: "{{ $host }}:{{ .Values.setup.http | default 8888 }}"
   certificate: /data/tls.certificate.pem
   key: /data/tls.key.pem
+{{- with .Values.setup.httpExternalPort }}
+  external_port: {{ . }}
+{{- end }}
 {{- with .Values.setup.ssh }}
 ssh:
   enable: true
   listen: "{{ $host }}:{{ . }}"
+{{- with $.Values.setup.sshExternalPort }}
+  external_port: {{ . }}
+{{- end }}
 {{- end }}
 {{- with .Values.setup.mysql }}
 mysql:

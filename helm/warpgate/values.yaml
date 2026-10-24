@@ -165,7 +165,9 @@ setup:
 
   # Ports to expose. Set to 0 or false to disable protocol.
   ssh: 2222
+  # sshExternalPort: 22
   http: 8888
+  # httpExternalPort: 443
   mysql: 33306
   pgsql: 55432
   kubernetes: 0
