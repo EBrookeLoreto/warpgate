@@ -151,6 +151,16 @@ spec:
               containerPort: {{ .Values.setup.kubernetes }}
               protocol: TCP
             {{- end }}
+            {{- if .Values.setup.rdp }}
+            - name: rdp
+              containerPort: {{ .Values.setup.rdp }}
+              protocol: TCP
+            {{- end }}
+            {{- if .Values.setup.vnc }}
+            - name: vnc
+              containerPort: {{ .Values.setup.vnc }}
+              protocol: TCP
+            {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

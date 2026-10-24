@@ -10,6 +10,9 @@ metadata:
   {{- end}}
 spec:
   type: {{ .Values.service.type }}
+  {{- if .Values.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  {{- end }}
   {{- if and (eq .Values.service.type "LoadBalancer") .Values.service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
     {{- toYaml .Values.service.loadBalancerSourceRanges | nindent 4 }}
@@ -53,6 +56,22 @@ spec:
       targetPort: kubernetes
       protocol: TCP
       name: kubernetes
+    {{- end }}
+    {{- end }}
+    {{- with .Values.service.ports.rdp }}
+    {{- if ne (int .) 0 }}
+    - port: {{ . }}
+      targetPort: rdp
+      protocol: TCP
+      name: rdp
+    {{- end }}
+    {{- end }}
+    {{- with .Values.service.ports.vnc }}
+    {{- if ne (int .) 0 }}
+    - port: {{ . }}
+      targetPort: vnc
+      protocol: TCP
+      name: vnc
     {{- end }}
     {{- end }}
   selector:

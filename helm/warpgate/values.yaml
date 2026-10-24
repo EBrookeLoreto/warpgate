@@ -170,6 +170,10 @@ setup:
   pgsql: 55432
   kubernetes: 0
   # kubernetes: 6443
+  rdp: 0
+  # rdp: 3389
+  vnc: 0
+  # vnc: 5900
 
   # Resources for init container (runs setup)
   resources: {}

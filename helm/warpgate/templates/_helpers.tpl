@@ -306,6 +306,9 @@ else is left at its default.
 {{- define "warpgate.config" -}}
 {{- $host := ternary "0.0.0.0" "[::]" (.Values.setup.disableIpV6 | default false) -}}
 database_url: {{ include "warpgate.databaseUrl" . | quote }}
+{{- with .Values.setup.externalHost }}
+external_host: {{ . | quote }}
+{{- end }}
 http:
   listen: "{{ $host }}:{{ .Values.setup.http | default 8888 }}"
   certificate: /data/tls.certificate.pem
@@ -331,6 +334,20 @@ postgres:
 {{- end }}
 {{- with .Values.setup.kubernetes }}
 kubernetes:
+  enable: true
+  listen: "{{ $host }}:{{ . }}"
+  certificate: /data/tls.certificate.pem
+  key: /data/tls.key.pem
+{{- end }}
+{{- with .Values.setup.rdp }}
+rdp:
+  enable: true
+  listen: "{{ $host }}:{{ . }}"
+  certificate: /data/tls.certificate.pem
+  key: /data/tls.key.pem
+{{- end }}
+{{- with .Values.setup.vnc }}
+vnc:
   enable: true
   listen: "{{ $host }}:{{ . }}"
   certificate: /data/tls.certificate.pem
